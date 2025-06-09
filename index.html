@@ -728,6 +728,78 @@
             color: #bbb; /* A lighter gray color for better visibility */
             opacity: 1; /* Ensure the placeholder is fully opaque */
         }
+
+/* Hamburger Menu Styles */
+.menu-toggle {
+    display: none; /* Hidden by default, shown on mobile */
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 0.5rem;
+    z-index: 1001;
+}
+
+.menu-toggle .bar {
+    display: block;
+    width: 25px;
+    height: 3px;
+    margin: 5px auto;
+    background-color: white;
+    transition: all 0.3s ease-in-out;
+}
+
+/* Styles for when the menu is open (toggled by JS) */
+.menu-toggle.active .bar:nth-child(1) {
+    transform: translateY(8px) rotate(45deg);
+}
+
+.menu-toggle.active .bar:nth-child(2) {
+    opacity: 0;
+}
+
+.menu-toggle.active .bar:nth-child(3) {
+    transform: translateY(-8px) rotate(-45deg);
+}
+
+/* Media Query for Mobile Navigation */
+@media (max-width: 768px) {
+    .nav-links {
+        display: none; /* Hide nav links by default on mobile */
+        flex-direction: column;
+        width: 100%;
+        position: absolute;
+        top: 100%; /* Position below the header */
+        left: 0;
+        background-color: rgba(12, 12, 12, 0.95); /* Match header background */
+        padding: 1rem 0;
+        box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+        z-index: 1000;
+    }
+
+    .nav-links.active {
+        display: flex; /* Show when active */
+    }
+
+    .nav-links li {
+        width: 100%;
+        text-align: center;
+        margin: 0;
+    }
+
+    .nav-links li a {
+        padding: 1rem;
+        display: block;
+        width: 100%;
+    }
+    
+    .nav-links li a::after { /* Optional: remove underline for mobile */
+        display: none;
+    }
+
+    .menu-toggle {
+        display: block; /* Show hamburger icon on mobile */
+    }
+}
     </style>
 </head>
 <body>
@@ -745,6 +817,11 @@
     <header id="header">
         <nav class="container">
             <div class="logo"><img src="assets/logo.png" alt="LifeTech Logo" style="height: 40px; vertical-align: middle;"></div>
+            <button class="menu-toggle" aria-label="Toggle navigation menu" aria-expanded="false">
+                <span class="bar"></span>
+                <span class="bar"></span>
+                <span class="bar"></span>
+            </button>
             <ul class="nav-links">
                 <li><a href="#home">Home</a></li>
                 <li><a href="#apps">Apps</a></li>
@@ -1119,6 +1196,33 @@
                     card.classList.add('visible');
                 }, index * 200);
             });
+
+            // Hamburger Menu Toggle Logic
+            const menuToggleBtn = document.querySelector('.menu-toggle');
+            const navLinksContainer = document.querySelector('.nav-links');
+
+            if (menuToggleBtn && navLinksContainer) {
+                menuToggleBtn.addEventListener('click', () => {
+                    menuToggleBtn.classList.toggle('active');
+                    navLinksContainer.classList.toggle('active');
+                    const isExpanded = navLinksContainer.classList.contains('active');
+                    menuToggleBtn.setAttribute('aria-expanded', isExpanded);
+                });
+
+                // Close menu when a nav link is clicked (for mobile view)
+                navLinksContainer.querySelectorAll('a').forEach(link => {
+                    link.addEventListener('click', () => {
+                        const menuToggleStyles = window.getComputedStyle(menuToggleBtn);
+                        // Check if the hamburger menu button is visible (i.e., we are on mobile)
+                        // and if the nav links container is currently active (i.e., menu is open)
+                        if (menuToggleStyles.display !== 'none' && navLinksContainer.classList.contains('active')) {
+                            menuToggleBtn.classList.remove('active');
+                            navLinksContainer.classList.remove('active');
+                            menuToggleBtn.setAttribute('aria-expanded', 'false');
+                        }
+                    });
+                });
+            }
         });
 
         // Premium touch interactions for mobile
