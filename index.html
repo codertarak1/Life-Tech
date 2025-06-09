@@ -739,28 +739,6 @@
     z-index: 1001;
 }
 
-.menu-toggle .bar {
-    display: block;
-    width: 25px;
-    height: 3px;
-    margin: 5px auto;
-    background-color: white;
-    transition: all 0.3s ease-in-out;
-}
-
-/* Styles for when the menu is open (toggled by JS) */
-.menu-toggle.active .bar:nth-child(1) {
-    transform: translateY(8px) rotate(45deg);
-}
-
-.menu-toggle.active .bar:nth-child(2) {
-    opacity: 0;
-}
-
-.menu-toggle.active .bar:nth-child(3) {
-    transform: translateY(-8px) rotate(-45deg);
-}
-
 /* Media Query for Mobile Navigation */
 @media (max-width: 768px) {
     .nav-links {
@@ -797,7 +775,7 @@
     }
 
     .menu-toggle {
-        display: block; /* Show hamburger icon on mobile */
+        display: block; /* Show plus icon on mobile */
     }
 }
     </style>
@@ -818,9 +796,7 @@
         <nav class="container">
             <div class="logo"><img src="assets/logo.png" alt="LifeTech Logo" style="height: 40px; vertical-align: middle;"></div>
             <button class="menu-toggle" aria-label="Toggle navigation menu" aria-expanded="false">
-                <span class="bar"></span>
-                <span class="bar"></span>
-                <span class="bar"></span>
+                <span style="font-size: 2.2rem; line-height: 1; color: white; font-weight: bold;">+</span>
             </button>
             <ul class="nav-links">
                 <li><a href="#home">Home</a></li>
