@@ -1,0 +1,1154 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>LifeTech - Transform Your Life with Smart Productivity Apps</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap');
+        
+        @font-face {
+            font-family: 'LifeTechFont';
+            src: url('assets/times.ttf') format('truetype');
+            font-weight: normal;
+            font-style: normal;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --primary-gradient: linear-gradient(135deg, #667eea 0%, #764ba2 50%, #f093fb 100%);
+            --secondary-gradient: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
+            --accent-gradient: linear-gradient(135deg, #fa709a 0%, #fee140 100%);
+            --dark-gradient: linear-gradient(135deg, #0c0c0c 0%, #1a1a1a 50%, #2d2d2d 100%);
+            --glass-bg: rgba(255, 255, 255, 0.08);
+            --glass-border: rgba(255, 255, 255, 0.2);
+            --shadow-xl: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+            --shadow-glow: 0 0 40px rgba(102, 126, 234, 0.4);
+        }
+
+        body {
+            font-family: 'LifeTechFont', 'Inter', sans-serif;
+            line-height: 1.6;
+            background: var(--dark-gradient);
+            color: white;
+            overflow-x: hidden;
+        }
+
+        /* Animated Background */
+        .bg-animation {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            opacity: 0.3;
+        }
+
+        .floating-shapes {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+        }
+
+        .shape {
+            position: absolute;
+            background: var(--primary-gradient);
+            border-radius: 50%;
+            filter: blur(40px);
+            animation: float 20s infinite linear;
+        }
+
+        .shape:nth-child(1) {
+            width: 200px;
+            height: 200px;
+            top: 10%;
+            left: 10%;
+            animation-delay: 0s;
+        }
+
+        .shape:nth-child(2) {
+            width: 150px;
+            height: 150px;
+            top: 60%;
+            right: 10%;
+            animation-delay: -7s;
+        }
+
+        .shape:nth-child(3) {
+            width: 100px;
+            height: 100px;
+            bottom: 20%;
+            left: 30%;
+            animation-delay: -14s;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0) rotate(0deg); }
+            33% { transform: translateY(-30px) rotate(120deg); }
+            66% { transform: translateY(30px) rotate(240deg); }
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        /* Premium Header */
+        header {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            background: rgba(12, 12, 12, 0.8);
+            backdrop-filter: blur(20px);
+            border-bottom: 1px solid var(--glass-border);
+            z-index: 1000;
+            padding: 1rem 0;
+            transition: all 0.3s ease;
+        }
+
+        header.scrolled {
+            background: rgba(12, 12, 12, 0.95);
+            box-shadow: var(--shadow-xl);
+        }
+
+        nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-size: 2.2rem;
+            font-weight: 800;
+            background: var(--primary-gradient);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            letter-spacing: -0.02em;
+        }
+
+        .nav-links {
+            display: flex;
+            list-style: none;
+            gap: 2.5rem;
+        }
+
+        .nav-links a {
+            text-decoration: none;
+            color: rgba(255, 255, 255, 0.8);
+            font-weight: 500;
+            font-size: 0.95rem;
+            transition: all 0.3s ease;
+            position: relative;
+        }
+
+        .nav-links a::after {
+            content: '';
+            position: absolute;
+            width: 0;
+            height: 2px;
+            bottom: -5px;
+            left: 50%;
+            background: var(--primary-gradient);
+            transition: all 0.3s ease;
+            transform: translateX(-50%);
+        }
+
+        .nav-links a:hover {
+            color: white;
+        }
+
+        .nav-links a:hover::after {
+            width: 100%;
+        }
+
+        /* Premium Hero Section */
+        .hero {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero-content {
+            position: relative;
+            z-index: 2;
+            text-align: center;
+            max-width: 900px;
+            margin: 0 auto;
+        }
+
+        .hero h1 {
+            font-size: clamp(3rem, 8vw, 6rem);
+            font-weight: 900;
+            margin-bottom: 2rem;
+            line-height: 1.1;
+            letter-spacing: -0.02em;
+            background: linear-gradient(135deg, #ffffff 0%, #667eea 50%, #f093fb 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            animation: textGlow 3s ease-in-out infinite alternate;
+        }
+
+        @keyframes textGlow {
+            from { text-shadow: 0 0 20px rgba(102, 126, 234, 0.5); }
+            to { text-shadow: 0 0 40px rgba(240, 147, 251, 0.8); }
+        }
+
+        .hero p {
+            font-size: 1.4rem;
+            margin-bottom: 3rem;
+            opacity: 0.9;
+            font-weight: 400;
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
+            line-height: 1.6;
+        }
+
+        .cta-buttons {
+            display: flex;
+            gap: 1.5rem;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        .cta-primary {
+            background: var(--primary-gradient);
+            color: white;
+            padding: 18px 40px;
+            text-decoration: none;
+            border-radius: 50px;
+            font-weight: 600;
+            font-size: 1.1rem;
+            transition: all 0.3s ease;
+            box-shadow: var(--shadow-glow);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .cta-primary::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+            transition: left 0.5s;
+        }
+
+        .cta-primary:hover::before {
+            left: 100%;
+        }
+
+        .cta-primary:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 20px 40px rgba(102, 126, 234, 0.4);
+        }
+
+        .cta-secondary {
+            background: var(--glass-bg);
+            color: white;
+            padding: 18px 40px;
+            text-decoration: none;
+            border-radius: 50px;
+            font-weight: 600;
+            font-size: 1.1rem;
+            border: 1px solid var(--glass-border);
+            backdrop-filter: blur(10px);
+            transition: all 0.3s ease;
+        }
+
+        .cta-secondary:hover {
+            background: var(--glass-border);
+            transform: translateY(-3px);
+        }
+
+        /* Premium Apps Section */
+        .apps {
+            padding: 120px 0;
+            position: relative;
+        }
+
+        .section-title {
+            text-align: center;
+            font-size: clamp(2.5rem, 5vw, 4rem);
+            font-weight: 800;
+            margin-bottom: 1rem;
+            background: var(--primary-gradient);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            letter-spacing: -0.02em;
+        }
+
+        .section-subtitle {
+            text-align: center;
+            font-size: 1.2rem;
+            opacity: 0.7;
+            margin-bottom: 4rem;
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .apps-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(380px, 1fr));
+            gap: 2.5rem;
+            margin-bottom: 4rem;
+        }
+
+        .app-card {
+            background: var(--glass-bg);
+            backdrop-filter: blur(20px);
+            border: 1px solid var(--glass-border);
+            border-radius: 24px;
+            padding: 2.5rem;
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .app-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 1px;
+            background: var(--primary-gradient);
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        .app-card:hover::before {
+            opacity: 1;
+        }
+
+        .app-card:hover {
+            transform: translateY(-10px) scale(1.02);
+            box-shadow: var(--shadow-xl);
+            border-color: rgba(102, 126, 234, 0.3);
+        }
+
+        .app-icon {
+            width: 90px;
+            height: 90px;
+            margin: 0 auto 1.5rem;
+            border-radius: 24px;
+            background: var(--primary-gradient);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2.2rem;
+            box-shadow: var(--shadow-glow);
+            animation: iconPulse 3s ease-in-out infinite;
+        }
+
+        @keyframes iconPulse {
+            0%, 100% { box-shadow: var(--shadow-glow); }
+            50% { box-shadow: 0 0 60px rgba(102, 126, 234, 0.6); }
+        }
+
+        .app-card h3 {
+            font-size: 1.6rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
+            text-align: center;
+            letter-spacing: -0.01em;
+        }
+
+        .app-card p {
+            color: rgba(255, 255, 255, 0.8);
+            margin-bottom: 1.5rem;
+            text-align: center;
+            font-size: 1rem;
+            line-height: 1.6;
+        }
+
+        .app-features {
+            list-style: none;
+            margin: 1.5rem 0;
+        }
+
+        .app-features li {
+            padding: 0.5rem 0;
+            color: rgba(255, 255, 255, 0.9);
+            display: flex;
+            align-items: center;
+            font-size: 0.95rem;
+        }
+
+        .app-features li::before {
+            content: "✓";
+            color: #4CAF50;
+            font-weight: bold;
+            margin-right: 0.75rem;
+            font-size: 1.1rem;
+        }
+
+        .app-screenshot {
+            width: 100%;
+            height: 180px;
+            object-fit: cover;
+            border-radius: 16px;
+            margin-top: 1.5rem;
+            transition: all 0.3s ease;
+        }
+
+        .app-card:hover .app-screenshot {
+            transform: scale(1.05);
+        }
+
+        /* Premium Demo Section */
+        .demo {
+            padding: 120px 0;
+            background: var(--glass-bg);
+            backdrop-filter: blur(20px);
+            border-top: 1px solid var(--glass-border);
+            border-bottom: 1px solid var(--glass-border);
+        }
+
+        .demo-content {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 4rem;
+            align-items: center;
+        }
+
+        .demo-text h2 {
+            font-size: clamp(2.5rem, 4vw, 3.5rem);
+            font-weight: 800;
+            margin-bottom: 1.5rem;
+            line-height: 1.2;
+            letter-spacing: -0.02em;
+        }
+
+        .demo-text p {
+            font-size: 1.1rem;
+            color: rgba(255, 255, 255, 0.8);
+            margin-bottom: 1.5rem;
+            line-height: 1.7;
+        }
+
+        .demo-video {
+            position: relative;
+            border-radius: 24px;
+            overflow: hidden;
+            box-shadow: var(--shadow-xl);
+            background: var(--glass-bg);
+            backdrop-filter: blur(20px);
+        }
+
+        .demo-video iframe {
+            width: 100%;
+            height: 350px;
+            border: none;
+        }
+
+        /* Premium About Section */
+        .about {
+            padding: 120px 0;
+        }
+
+        .about-content {
+            text-align: center;
+            max-width: 900px;
+            margin: 0 auto;
+        }
+
+        .about h2 {
+            font-size: clamp(2.5rem, 4vw, 3.5rem);
+            font-weight: 800;
+            margin-bottom: 2rem;
+            letter-spacing: -0.02em;
+        }
+
+        .about p {
+            font-size: 1.1rem;
+            color: rgba(255, 255, 255, 0.8);
+            margin-bottom: 2rem;
+            line-height: 1.7;
+        }
+
+        .stats {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 3rem;
+            margin: 4rem 0;
+        }
+
+        .stat {
+            text-align: center;
+            padding: 2rem;
+            background: var(--glass-bg);
+            backdrop-filter: blur(20px);
+            border: 1px solid var(--glass-border);
+            border-radius: 20px;
+            transition: all 0.3s ease;
+        }
+
+        .stat:hover {
+            transform: translateY(-5px);
+            box-shadow: var(--shadow-xl);
+        }
+
+        .stat-number {
+            font-size: 3rem;
+            font-weight: 900;
+            background: var(--primary-gradient);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            display: block;
+            margin-bottom: 0.5rem;
+        }
+
+        .stat-label {
+            color: rgba(255, 255, 255, 0.8);
+            font-size: 1rem;
+            font-weight: 500;
+        }
+
+        /* Premium Contact Section */
+        .contact {
+            padding: 120px 0;
+            background: var(--glass-bg);
+            backdrop-filter: blur(20px);
+            border-top: 1px solid var(--glass-border);
+        }
+
+        .contact-content {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 4rem;
+            align-items: start;
+        }
+
+        .contact-info h2 {
+            font-size: clamp(2.5rem, 4vw, 3.5rem);
+            font-weight: 800;
+            margin-bottom: 2rem;
+            letter-spacing: -0.02em;
+        }
+
+        .contact-item {
+            margin-bottom: 2rem;
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            padding: 1rem;
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 12px;
+            border: 1px solid var(--glass-border);
+            transition: all 0.3s ease;
+        }
+
+        .contact-item:hover {
+            background: rgba(255, 255, 255, 0.08);
+            transform: translateX(5px);
+        }
+
+        .contact-item strong {
+            min-width: 100px;
+            font-weight: 600;
+        }
+
+        .contact-form {
+            background: var(--glass-bg);
+            padding: 3rem;
+            border-radius: 24px;
+            backdrop-filter: blur(20px);
+            border: 1px solid var(--glass-border);
+            box-shadow: var(--shadow-xl);
+        }
+
+        .form-group {
+            margin-bottom: 2rem;
+        }
+
+        .form-group input,
+        .form-group textarea {
+            width: 100%;
+            padding: 1.2rem;
+            border: 1px solid var(--glass-border);
+            border-radius: 12px;
+            background: rgba(255, 255, 255, 0.05);
+            color: white;
+            font-size: 1rem;
+            font-family: inherit;
+            transition: all 0.3s ease;
+            backdrop-filter: blur(10px);
+        }
+
+        .form-group input:focus,
+        .form-group textarea:focus {
+            outline: none;
+            border-color: rgba(102, 126, 234, 0.5);
+            background: rgba(255, 255, 255, 0.08);
+            box-shadow: 0 0 20px rgba(102, 126, 234, 0.2);
+        }
+
+        .form-group textarea {
+            height: 140px;
+            resize: vertical;
+        }
+
+        .submit-btn {
+            background: var(--primary-gradient);
+            color: white;
+            padding: 15px 40px;
+            border: none;
+            border-radius: 50px;
+            font-weight: 600;
+            font-size: 1.1rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: var(--shadow-glow);
+            width: 100%;
+        }
+
+        .submit-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 20px 40px rgba(102, 126, 234, 0.4);
+        }
+
+        /* Premium Footer */
+        footer {
+            background: rgba(12, 12, 12, 0.9);
+            color: rgba(255, 255, 255, 0.8);
+            text-align: center;
+            padding: 3rem 0;
+            border-top: 1px solid var(--glass-border);
+        }
+
+        /* Scroll Animations */
+        .fade-in {
+            opacity: 0;
+            transform: translateY(40px);
+            transition: all 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .fade-in.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .slide-in-left {
+            opacity: 0;
+            transform: translateX(-40px);
+            transition: all 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .slide-in-left.visible {
+            opacity: 1;
+            transform: translateX(0);
+        }
+
+        .slide-in-right {
+            opacity: 0;
+            transform: translateX(40px);
+            transition: all 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .slide-in-right.visible {
+            opacity: 1;
+            transform: translateX(0);
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .nav-links {
+                display: none;
+            }
+
+            .hero h1 {
+                font-size: 3rem;
+            }
+
+            .demo-content,
+            .contact-content {
+                grid-template-columns: 1fr;
+                gap: 3rem;
+            }
+
+            .apps-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .cta-buttons {
+                flex-direction: column;
+                align-items: center;
+            }
+
+            .stats {
+                grid-template-columns: repeat(2, 1fr);
+                gap: 2rem;
+            }
+        }
+
+        /* Premium Cursor Effect */
+        .cursor {
+            width: 20px;
+            height: 20px;
+            border: 2px solid rgba(102, 126, 234, 0.5);
+            border-radius: 50%;
+            position: fixed;
+            pointer-events: none;
+            z-index: 9999;
+            transition: all 0.1s ease;
+            mix-blend-mode: difference;
+        }
+
+        /* Scroll Progress Bar */
+        .scroll-progress {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 0%;
+            height: 3px;
+            background: var(--primary-gradient);
+            z-index: 9999;
+            transition: width 0.1s ease;
+        }
+        .contact-form input::placeholder,
+        .contact-form textarea::placeholder {
+            color: #bbb; /* A lighter gray color for better visibility */
+            opacity: 1; /* Ensure the placeholder is fully opaque */
+        }
+    </style>
+</head>
+<body>
+    <div class="scroll-progress"></div>
+    <div class="cursor"></div>
+    
+    <div class="bg-animation">
+        <div class="floating-shapes">
+            <div class="shape"></div>
+            <div class="shape"></div>
+            <div class="shape"></div>
+        </div>
+    </div>
+
+    <header id="header">
+        <nav class="container">
+            <div class="logo"><img src="assets/logo.png" alt="LifeTech Logo" style="height: 40px; vertical-align: middle;"></div>
+            <ul class="nav-links">
+                <li><a href="#home">Home</a></li>
+                <li><a href="#apps">Apps</a></li>
+                <li><a href="#demo">Demo</a></li>
+                <li><a href="#about">About</a></li>
+                <li><a href="#contact">Contact</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <section id="home" class="hero">
+        <div class="container">
+            <div class="hero-content">
+                <h1>Transform Your Life with Smart Productivity Apps</h1>
+                <p>Boost your productivity, build better habits, and achieve your goals with our suite of beautifully designed React Native apps that redefine what's possible.</p>
+                <div class="cta-buttons">
+                    <a href="#apps" class="cta-primary">Explore Our Apps</a>
+                    <a href="#demo" class="cta-secondary">Watch Demo</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="apps" class="apps">
+        <div class="container">
+            <h2 class="section-title fade-in">Our Premium App Collection</h2>
+            <p class="section-subtitle fade-in">Discover the future of productivity with our cutting-edge suite of applications</p>
+            
+            <div class="apps-grid">
+                <div class="app-card fade-in">
+                    <div class="app-icon">🍅</div>
+                    <h3>FocusFlow Pro</h3>
+                    <p>Master the Pomodoro Technique with our advanced timer and analytics</p>
+                    <ul class="app-features">
+                        <li>Customizable work/break intervals</li>
+                        <li>Detailed productivity analytics</li>
+                        <li>Focus music integration</li>
+                        <li>Cross-device synchronization</li>
+                    </ul>
+                    <img src="https://images.unsplash.com/photo-1611224923853-80b023f02d71?w=400&h=250&fit=crop&crop=center" alt="FocusFlow Pro Screenshot" class="app-screenshot">
+                </div>
+
+                <div class="app-card fade-in">
+                    <div class="app-icon">⭐</div>
+                    <h3>Fabulous Life</h3>
+                    <p>Build life-changing habits with science-backed motivation techniques</p>
+                    <ul class="app-features">
+                        <li>Scientifically-designed habit journeys</li>
+                        <li>Motivational coaching system</li>
+                        <li>Beautiful progress visualizations</li>
+                        <li>Community challenges</li>
+                    </ul>
+                    <img src="https://images.unsplash.com/photo-1542831371-29b0f74f9713?w=400&h=250&fit=crop&crop=center" alt="Fabulous Life Screenshot" class="app-screenshot">
+                </div>
+
+                <div class="app-card fade-in">
+                    <div class="app-icon">📊</div>
+                    <h3>HabitGrid</h3>
+                    <p>Track multiple habits with powerful streaks and detailed insights</p>
+                    <ul class="app-features">
+                        <li>Visual habit tracking grid</li>
+                        <li>Streak counters and rewards</li>
+                        <li>Habit correlation analysis</li>
+                        <li>Smart reminders system</li>
+                    </ul>
+                    <img src="https://images.unsplash.com/photo-1484480974693-6ca0a78fb36b?w=400&h=250&fit=crop&crop=center" alt="HabitGrid Screenshot" class="app-screenshot">
+                </div>
+
+                <div class="app-card fade-in">
+                    <div class="app-icon">✅</div>
+                    <h3>TaskMaster Pro</h3>
+                    <p>Advanced todo management with AI-powered task prioritization</p>
+                    <ul class="app-features">
+                        <li>AI-powered task prioritization</li>
+                        <li>Project organization tools</li>
+                        <li>Time tracking integration</li>
+                        <li>Team collaboration features</li>
+                    </ul>
+                    <img src="https://images.unsplash.com/photo-1588196749597-9ff075ee6b5b?w=400&h=250&fit=crop&crop=center" alt="TaskMaster Pro Screenshot" class="app-screenshot">
+                </div>
+
+                <div class="app-card fade-in">
+                    <div class="app-icon">🧘</div>
+                    <h3>MindfulMoments</h3>
+                    <p>Integrate mindfulness and meditation into your daily routine</p>
+                    <ul class="app-features">
+                        <li>Guided meditation sessions</li>
+                        <li>Breathing exercise timers</li>
+                        <li>Mood tracking journal</li>
+                        <li>Sleep story library</li>
+                    </ul>
+                    <img src="https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=400&h=250&fit=crop&crop=center" alt="MindfulMoments Screenshot" class="app-screenshot">
+                </div>
+
+                <div class="app-card fade-in">
+                    <div class="app-icon">📈</div>
+                    <h3>LifeMetrics</h3>
+                    <p>Comprehensive life tracking and personal analytics dashboard</p>
+                    <ul class="app-features">
+                        <li>Multi-metric life tracking</li>
+                        <li>Personal analytics dashboard</li>
+                        <li>Goal achievement insights</li>
+                        <li>Weekly/monthly reports</li>
+                    </ul>
+                    <img src="https://images.unsplash.com/photo-1460925895917-afdab827c52f?w=400&h=250&fit=crop&crop=center" alt="LifeMetrics Screenshot" class="app-screenshot">
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="demo" class="demo">
+        <div class="container">
+            <div class="demo-content">
+                <div class="demo-text slide-in-left">
+                    <h2>See Our Apps in Action</h2>
+                    <p>Watch how our beautifully crafted apps can transform your daily productivity and help you build lasting habits. Each app is designed with user experience at the forefront, featuring intuitive interfaces and powerful functionality.</p>
+                    <p>Our React Native architecture ensures smooth performance across all devices while maintaining native-like user experiences that feel premium and responsive.</p>
+                </div>
+                <div class="demo-video slide-in-right">
+                    <iframe width="560" height="315" src="https://www.youtube.com/embed/TBxS0XhdfmU?si=bZbBJLsZhiYgvigE" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="about" class="about">
+        <div class="container">
+            <div class="about-content fade-in">
+                <h2>About LifeTech</h2>
+                <p>At LifeTech, we believe that technology should enhance human potential, not complicate it. Founded with the mission to create productivity tools that actually work, we develop React Native applications that seamlessly integrate into your daily life.</p>
+                <p>Our team combines cutting-edge technology with behavioral science to create apps that don't just look beautiful – they drive real, measurable improvements in your productivity and well-being.</p>
+                
+                <div class="stats">
+                    <div class="stat fade-in">
+                        <span class="stat-number">100K+</span>
+                        <span class="stat-label">Active Users</span>
+                    </div>
+                    <div class="stat fade-in">
+                        <span class="stat-number">4.8★</span>
+                        <span class="stat-label">App Store Rating</span>
+                    </div>
+                    <div class="stat fade-in">
+                        <span class="stat-number">50M+</span>
+                        <span class="stat-label">Tasks Completed</span>
+                    </div>
+                    <div class="stat fade-in">
+                        <span class="stat-number">6</span>
+                        <span class="stat-label">Premium Apps</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="contact" class="contact">
+        <div class="container">
+            <div class="contact-content">
+                <div class="contact-info slide-in-left">
+                    <h2>Get in Touch</h2>
+                    <p>Ready to transform your productivity? Let's discuss how LifeTech can help you achieve your goals and unlock your full potential.</p>
+                    
+                    <div class="contact-item">
+                        <strong>📧 Email:</strong>
+                        <span>tareksabbir20@gmail.com</span>
+                    </div>
+                    <div class="contact-item">
+                        <strong>📱 Phone:</strong>
+                        <span>+8801317482908</span>
+                    </div>
+                    <div class="contact-item">
+                        <strong>📍 Location:</strong>
+                        <span>Dhaka, Bangladesh</span>
+                    </div>
+                    <div class="contact-item">
+                        <strong>💼 LinkedIn:</strong>
+                        <span><a href="https://www.linkedin.com/in/tarak-md-shabbir-5b7b451b9/" target="_blank" rel="noopener noreferrer" style="color: white; text-decoration: underline;">Connect with us professionally</a></span>
+                    </div>
+                </div>
+                
+                <form class="contact-form slide-in-right" onsubmit="handleSubmit(event)">
+                    <div class="form-group">
+                        <input type="text" placeholder="Your Name" required>
+                    </div>
+                    <div class="form-group">
+                        <input type="email" placeholder="Your Email" required>
+                    </div>
+                    <div class="form-group">
+                        <input type="text" placeholder="Subject">
+                    </div>
+                    <div class="form-group">
+                        <textarea placeholder="Your Message" required></textarea>
+                    </div>
+                    <button type="submit" class="submit-btn">Send Message</button>
+                </form>
+            </div>
+        </div>
+    </section>
+
+    <footer>
+        <div class="container">
+            <p>&copy; 2025 LifeTech. All rights reserved. Built with ❤️ for productivity enthusiasts.</p>
+        </div>
+    </footer>
+
+    <script>
+        // Premium Cursor Effect
+        const cursor = document.querySelector('.cursor');
+        let mouseX = 0, mouseY = 0;
+
+        document.addEventListener('mousemove', (e) => {
+            mouseX = e.clientX;
+            mouseY = e.clientY;
+        });
+
+        function updateCursor() {
+            cursor.style.left = mouseX + 'px';
+            cursor.style.top = mouseY + 'px';
+            requestAnimationFrame(updateCursor);
+        }
+        updateCursor();
+
+        // Scroll Progress Bar
+        const scrollProgress = document.querySelector('.scroll-progress');
+        
+        window.addEventListener('scroll', () => {
+            const scrollTop = window.pageYOffset;
+            const docHeight = document.body.offsetHeight - window.innerHeight;
+            const scrollPercent = (scrollTop / docHeight) * 100;
+            scrollProgress.style.width = scrollPercent + '%';
+        });
+
+        // Header Background on Scroll
+        const header = document.getElementById('header');
+        
+        window.addEventListener('scroll', () => {
+            if (window.scrollY > 100) {
+                header.classList.add('scrolled');
+            } else {
+                header.classList.remove('scrolled');
+            }
+        });
+
+        // Smooth scrolling for navigation links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+            });
+        });
+
+        // Premium Intersection Observer for animations
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('visible');
+                }
+            });
+        }, observerOptions);
+
+        // Observe all animated elements
+        document.querySelectorAll('.fade-in, .slide-in-left, .slide-in-right').forEach(el => {
+            observer.observe(el);
+        });
+
+        // Form submission handler
+        function handleSubmit(event) {
+            event.preventDefault();
+            
+            // Add loading state
+            const submitBtn = event.target.querySelector('.submit-btn');
+            const originalText = submitBtn.textContent;
+            submitBtn.textContent = 'Sending...';
+            submitBtn.disabled = true;
+            
+            // Simulate form submission
+            setTimeout(() => {
+                alert('Thank you for your message! We\'ll get back to you soon.');
+                event.target.reset();
+                submitBtn.textContent = originalText;
+                submitBtn.disabled = false;
+            }, 2000);
+        }
+
+        // Premium parallax effect for hero section
+        window.addEventListener('scroll', () => {
+            const scrolled = window.pageYOffset;
+            const hero = document.querySelector('.hero');
+            const shapes = document.querySelectorAll('.shape');
+            
+            if (hero) {
+                hero.style.transform = `translateY(${scrolled * 0.3}px)`;
+            }
+            
+            // Advanced parallax for floating shapes
+            shapes.forEach((shape, index) => {
+                const speed = 0.1 + (index * 0.05);
+                shape.style.transform = `translateY(${scrolled * speed}px) rotate(${scrolled * 0.1}deg)`;
+            });
+        });
+
+        // Premium hover effects for app cards
+        document.querySelectorAll('.app-card').forEach((card, index) => {
+            card.style.animationDelay = `${index * 0.1}s`;
+            
+            card.addEventListener('mouseenter', (e) => {
+                const rect = card.getBoundingClientRect();
+                const x = e.clientX - rect.left;
+                const y = e.clientY - rect.top;
+                
+                card.style.setProperty('--mouse-x', x + 'px');
+                card.style.setProperty('--mouse-y', y + 'px');
+                card.style.transform = 'translateY(-15px) rotateX(5deg) rotateY(5deg) scale(1.02)';
+            });
+            
+            card.addEventListener('mouseleave', () => {
+                card.style.transform = 'translateY(0) rotateX(0) rotateY(0) scale(1)';
+            });
+            
+            card.addEventListener('mousemove', (e) => {
+                const rect = card.getBoundingClientRect();
+                const x = e.clientX - rect.left;
+                const y = e.clientY - rect.top;
+                const centerX = rect.width / 2;
+                const centerY = rect.height / 2;
+                const rotateX = (y - centerY) / 10;
+                const rotateY = (centerX - x) / 10;
+                
+                card.style.transform = `translateY(-15px) rotateX(${rotateX}deg) rotateY(${rotateY}deg) scale(1.02)`;
+            });
+        });
+
+        // Premium typing effect for hero text
+        function typeWriter(element, text, speed = 50) {
+            let i = 0;
+            element.innerHTML = '';
+            
+            function type() {
+                if (i < text.length) {
+                    element.innerHTML += text.charAt(i);
+                    i++;
+                    setTimeout(type, speed);
+                }
+            }
+            type();
+        }
+
+        // Initialize premium effects on load
+        window.addEventListener('load', () => {
+            // Add premium loading animation
+            document.body.style.opacity = '0';
+            document.body.style.transition = 'opacity 0.5s ease';
+            
+            setTimeout(() => {
+                document.body.style.opacity = '1';
+            }, 100);
+            
+            // Stagger animations for app cards
+            const appCards = document.querySelectorAll('.app-card');
+            appCards.forEach((card, index) => {
+                setTimeout(() => {
+                    card.classList.add('visible');
+                }, index * 200);
+            });
+        });
+
+        // Premium touch interactions for mobile
+        if ('ontouchstart' in window) {
+            document.querySelectorAll('.app-card').forEach(card => {
+                card.addEventListener('touchstart', () => {
+                    card.style.transform = 'scale(0.98)';
+                });
+                
+                card.addEventListener('touchend', () => {
+                    card.style.transform = 'scale(1)';
+                });
+            });
+        }
+
+        // Advanced scroll-triggered animations
+        const scrollTriggers = {
+            '.hero h1': { delay: 0, duration: 1000 },
+            '.hero p': { delay: 200, duration: 1000 },
+            '.cta-buttons': { delay: 400, duration: 1000 },
+            '.section-title': { delay: 0, duration: 800 },
+            '.section-subtitle': { delay: 200, duration: 800 }
+        };
+
+        Object.entries(scrollTriggers).forEach(([selector, config]) => {
+            const elements = document.querySelectorAll(selector);
+            elements.forEach((el, index) => {
+                const totalDelay = config.delay + (index * 100);
+                el.style.animationDelay = totalDelay + 'ms';
+            });
+        });
+    </script>
+</body>
+</html>
